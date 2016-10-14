@@ -1,5 +1,6 @@
 package cs3500.hw02;
 
+import cs3500.hw04.FreeCellModelCreator;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import static org.junit.Assert.assertNotEquals;
  * Created by Ethan on 9/25/2016.
  */
 public class IFreeCellModelTest {
+  // Added: factory for model creation
+  FreeCellModelCreator factory;
   IFreeCellModel<Card> model;
   List<Card> sortedDeck;
 
@@ -57,6 +60,7 @@ public class IFreeCellModelTest {
             "C5: Q♥, J♣, 9♥, 8♣, 6♥, 5♣, 3♥, 2♣\n" +
             "C6: Q♦, J♠, 9♦, 8♠, 6♦, 5♠, 3♦, 2♠";
     assertEquals(gameState, model.getGameState());
+
     //test shuffle/non-shuffle
     this.reset();
     model.startGame(deck, 4, 1, true);
@@ -363,6 +367,8 @@ public class IFreeCellModelTest {
 
   @Test
   public void testGetGameState() {
+    this.reset();
+
     //test empty before game start
     assertEquals("", model.getGameState());
 
@@ -399,10 +405,14 @@ public class IFreeCellModelTest {
     assertEquals(gameState, model.getGameState());
   }
 
+  /**
+   * TODO
+   */
   private void reset() {
-    this.model = new FreeCellModel();
+    // Changed: model made from factory creation instead of new FreeCellModel
+    this.model = this.factory.create(FreeCellModelCreator.GameType.SINGLEMOVE);
 
-    this.sortedDeck = new ArrayList<Card>();
+    this.sortedDeck = new ArrayList<>();
     this.sortedDeck.add(new Card(Suit.HEARTS, 1));
     this.sortedDeck.add(new Card(Suit.DIAMONDS, 1));
     this.sortedDeck.add(new Card(Suit.CLUBS, 1));
@@ -469,7 +479,12 @@ public class IFreeCellModelTest {
     this.sortedDeck.add(new Card(Suit.SPADES, 13));
   }
 
+  /**
+   * TODO
+   */
   public IFreeCellModelTest() {
+    // Added: Initialize factory
+    this.factory = new FreeCellModelCreator();
     this.reset();
   }
 

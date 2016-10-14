@@ -24,20 +24,6 @@ public class MultiMoveFreeCellModel extends FreeCellModel {
     if (sourceType == null) {
       throw new IllegalArgumentException("Source pile cannot be null.");
     }
-    switch (sourceType) {
-      case OPEN:
-        cards = removeCards(sourcePileNumber, this.opens, cardIndex);
-        break;
-      case CASCADE:
-        cards = removeCards(sourcePileNumber, this.cascades, cardIndex);
-        break;
-      case FOUNDATION:
-        cards = removeCards(sourcePileNumber, this.foundations, cardIndex);
-        this.foundationCount -= cards.size();
-        break;
-      default:
-        throw new IllegalArgumentException("Invalid source pile type.");
-    }
 
     int numFreeOpens = 0;
     int numFreeCascades = 0;
@@ -54,7 +40,23 @@ public class MultiMoveFreeCellModel extends FreeCellModel {
       }
     }
 
+    switch (sourceType) {
+      case OPEN:
+        cards = removeCards(sourcePileNumber, this.opens, cardIndex);
+        break;
+      case CASCADE:
+        cards = removeCards(sourcePileNumber, this.cascades, cardIndex);
+        break;
+      case FOUNDATION:
+        cards = removeCards(sourcePileNumber, this.foundations, cardIndex);
+        this.foundationCount -= cards.size();
+        break;
+      default:
+        throw new IllegalArgumentException("Invalid source pile type.");
+    }
+
     double maxCards = (numFreeOpens + 1) * Math.pow(2, numFreeCascades);
+
     if (cards.size() > maxCards) {
       throw new IllegalArgumentException("Could not move that many cards at once.");
     }
