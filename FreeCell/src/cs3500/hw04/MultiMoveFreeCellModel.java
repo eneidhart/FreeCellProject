@@ -95,12 +95,13 @@ public class MultiMoveFreeCellModel extends FreeCellModel {
         top = this.foundations[destPileNumber].top();
         boolean condition1 = (this.foundations[destPileNumber].isEmpty() &&
                 cards.get(0).getValue() == 1);
-        if (!condition1 && top == null) {
+        if (this.foundations[destPileNumber].isEmpty() && cards.get(0).getValue() != 1) {
+          returnCards(sourceType, sourcePileNumber, cards);
           throw new IllegalArgumentException("Only Aces may be placed in empty foundation piles.");
         }
         condition = ((condition1 ||
-                (top.sameSuit(cards.get(0)) && top.getValue() + 1 == cards.get(0).getValue())) &&
-        cards.size() == 1);
+                (top.sameSuit(cards.get(0)) && (top.getValue() + 1 == cards.get(0).getValue()))) &&
+                cards.size() == 1);
         placeCards(destPileNumber, this.foundations, cards, condition,
                 sourceType, sourcePileNumber);
         this.foundationCount += cards.size();

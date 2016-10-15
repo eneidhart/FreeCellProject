@@ -4,21 +4,33 @@ import cs3500.hw02.FreeCellModel;
 import cs3500.hw02.IFreeCellModel;
 
 /**
+ * Factory class for creating an IFreeCellModel.
  * Created by Ethan on 10/13/2016.
  */
 public class FreeCellModelCreator {
 
   /**
-   * TODO
+   * Enumeration specifying which type of game will be played.
    */
   public enum GameType {
-    SINGLEMOVE, MULTIMOVE
+    /**
+     * Only one card may be moved at a time in this game type.
+     */
+    SINGLEMOVE,
+
+    /**
+     * Multiple cards may be moved at a time in this game type, as long as they form a valid build,
+     * form a valid build with the top card of their destination pile, and the number of free open
+     * piles and cascade piles allows this sequence of single moves.
+     */
+    MULTIMOVE
   }
 
   /**
-   * TODO
-   * @param type
-   * @return
+   * Returns a model for FreeCell.
+   * @param type specifies whether the game will be played with single moves only,
+   *             or with multi-moves allowed.
+   * @return An IFreeCellModel for playing the game.
    */
   public static IFreeCellModel create(GameType type) {
     switch (type) {

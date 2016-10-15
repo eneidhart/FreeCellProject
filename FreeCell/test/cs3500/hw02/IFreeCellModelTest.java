@@ -406,7 +406,7 @@ public class IFreeCellModelTest {
   }
 
   /**
-   * TODO
+   * Resets the data in the model to initial values.
    */
   private void reset() {
     // Changed: model made from factory creation instead of new FreeCellModel
@@ -480,7 +480,7 @@ public class IFreeCellModelTest {
   }
 
   /**
-   * TODO
+   * Constructor which creates a model factory and initializes the data in the model.
    */
   public IFreeCellModelTest() {
     // Added: Initialize factory

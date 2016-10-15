@@ -68,12 +68,13 @@ public class FreeCellModel implements IFreeCellModel<Card> {
   }
 
   /**
-   * TODO
-   * @param sourcePileNumber
-   * @param piles
-   * @param cardIndex
-   * @return
-   * @throws IllegalArgumentException
+   * Removes cards from a pile.
+   * @param sourcePileNumber The source pile index
+   * @param piles The array of piles
+   * @param cardIndex The card in the specified pile
+   * @return A list of cards removed from the specified pile
+   * @throws IllegalArgumentException if invalid pile index is supplied,
+   *     or if specified pile is empty.
    */
   protected List<Card> removeCards(int sourcePileNumber, Pile[] piles, int cardIndex)
           throws IllegalArgumentException {
@@ -87,21 +88,35 @@ public class FreeCellModel implements IFreeCellModel<Card> {
   }
 
   /**
-   * TODO
-   * @param destPileNumber
-   * @param piles
-   * @param sourceType
-   * @param sourcePileNumber
-   * @param cards
+   * Checks if the destination pile is valid. Places them back where they came from if invalid move.
+   * @param destPileNumber The index of the destination pile.
+   * @param piles The array of piles.
+   * @param sourceType The type of pile the cards came from.
+   * @param sourcePileNumber The pile index the cards came from.
+   * @param cards The list of cards to be placed in the destination pile.
+   * @throws IllegalArgumentException if specified destination pile index is invalid.
    */
-  protected void checkDestPile (int  destPileNumber, Pile[] piles, PileType sourceType,
+  protected void checkDestPile(int  destPileNumber, Pile[] piles, PileType sourceType,
                                 int sourcePileNumber, List<Card> cards)
-          throws IllegalArgumentException{
+          throws IllegalArgumentException {
     if (destPileNumber >= piles.length || destPileNumber < 0) {
       returnCards(sourceType, sourcePileNumber, cards);
       throw new IllegalArgumentException("Invalid destination pile index.");
     }
   }
+
+  /**
+   * Places a list of cards in a given destination pile.
+   * Returns them to their source pile if invalid move.
+   * @param destPileNumber The index of the destination pile.
+   * @param piles The array of piles.
+   * @param cards The cards to be placed.
+   * @param placeCondition The condition specifying whether or not
+   *                       placing the cards is a valid move.
+   * @param sourceType The type of pile the cards came from.
+   * @param sourcePileNumber The index of the pile the cards came from.
+   * @throws IllegalArgumentException if placeCondition is false.
+   */
   protected void placeCards(int destPileNumber, Pile[] piles, List<Card> cards,
                             boolean placeCondition, PileType sourceType, int sourcePileNumber)
           throws IllegalArgumentException {
